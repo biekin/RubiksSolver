@@ -42,10 +42,10 @@ public class ColorGetter {
 //        areas.add(new Area((int)(0.5*requested_width + 0.25*alpha1), (int)((5.0/8.0)*requested_height + alpha2), 1));//k 10
 //        areas.add(new Area((int)(0.5*requested_width + 0.75 * alpha1), (int)((5.0/8.0)*requested_height - alpha2), 1)); //l  11
 
-        areas.add(new Area(370,374, 1));  //A  0
-        areas.add(new Area(216, 440,1)); //b  1
-        areas.add(new Area(520,448,1)); //c 2
-        areas.add(new Area(352,548,1)); //d  3
+        areas.add(new Area(360,374, 1));  //a  0
+        areas.add(new Area(200, 444,1)); //b  1
+        areas.add(new Area(520,444,1)); //c 2
+        areas.add(new Area(360,548,1)); //d  3
         areas.add(new Area(130,584,1)); //e  4
         areas.add(new Area(264,688,1)); //f  5
         areas.add(new Area(444,694,1)); //g 6
@@ -67,13 +67,13 @@ public class ColorGetter {
                 requested_width,
                 requested_height,
                 false,
-                true);
+                false);
 
         f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_back.JPG"),
                 requested_width,
                 requested_height,
                 false,
-                true);
+                false);
 
 
 

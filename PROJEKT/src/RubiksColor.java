@@ -10,7 +10,7 @@ public class RubiksColor {
     private double max_green;
     private double max_blue;
 
-    private double eps = 50;
+    private double eps = 66;
 
     int index;
 
