@@ -690,5 +690,146 @@ public class Algo_moves2x2x2
         pw.close();
 
     }
+    public static String Algorithm(ArrayList<String> State) throws  Exception{
+        ArrayList<ArrayList<String>> ListOfStates = new ArrayList<>(Arrays.asList(State));
+        ArrayList<String> ListOfMoves = new ArrayList<String>(Arrays.asList("p0"));
+        int j=0;
+
+
+
+        ArrayList<String> stateD= new ArrayList<>();
+        ArrayList<String> stateL= new ArrayList<>();
+        ArrayList<String> stateF= new ArrayList<>();
+        ArrayList<String> stateD2= new ArrayList<>();
+        ArrayList<String> stateL2= new ArrayList<>();
+        ArrayList<String> stateF2= new ArrayList<>();
+        ArrayList<String> stateDp= new ArrayList<>();
+        ArrayList<String> stateLp= new ArrayList<>();
+        ArrayList<String> stateFp= new ArrayList<>();
+        String move0="p0";
+        char lastmove;
+        int i =0;
+        while (true){
+
+
+            if(Algo_moves2x2x2.Found(State))
+                break;
+
+            move0=ListOfMoves.get(i);
+            lastmove=move0.charAt(move0.length()-2);
+            if (lastmove!='F') {
+                stateF = Algo_moves2x2x2.F(State);
+                ListOfStates.add(stateF);
+                ListOfMoves.add(move0 + "F1");
+                j++;
+                if (Algo_moves2x2x2.Found(stateF))
+                    break;
+
+            }
+
+            if (lastmove!='D') {
+
+                stateD = Algo_moves2x2x2.D(State);
+                ListOfStates.add(stateD);
+                ListOfMoves.add(move0 + "D1");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateD))
+                    break;
+            }
+
+            if (lastmove!='L') {
+
+                stateL = Algo_moves2x2x2.L(State);
+                ListOfStates.add(stateL);
+                ListOfMoves.add(move0 + "L1");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateL))
+                    break;
+            }
+
+            if (lastmove!='F') {
+
+                stateF2 = Algo_moves2x2x2.F2(State);
+                ListOfStates.add(stateF2);
+                ListOfMoves.add(move0 + "F2");
+                j++;
+                if (Algo_moves2x2x2.Found(stateF2))
+                    break;
+            }
+
+            if (lastmove!='D') {
+
+                stateD2 = Algo_moves2x2x2.D2(State);
+                ListOfStates.add(stateD2);
+                ListOfMoves.add(move0 + "D2");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateD2))
+                    break;
+            }
+
+            if (lastmove!='L') {
+
+                stateL2 = Algo_moves2x2x2.L2(State);
+                ListOfStates.add(stateL2);
+                ListOfMoves.add(move0 + "L2");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateL2))
+                    break;
+            }
+
+            if (lastmove!='F') {
+
+                stateFp = Algo_moves2x2x2.Fprim(State);
+                ListOfStates.add(stateFp);
+                ListOfMoves.add(move0 + "Fp");
+                j++;
+                if (Algo_moves2x2x2.Found(stateFp))
+                    break;
+            }
+
+            if (lastmove!='D') {
+
+                stateDp = Algo_moves2x2x2.Dprim(State);
+                ListOfStates.add(stateDp);
+                ListOfMoves.add(move0 + "Dp");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateDp))
+                    break;
+            }
+
+            if (lastmove!='L') {
+
+                stateLp = Algo_moves2x2x2.Lprim(State);
+                ListOfStates.add(stateLp);
+                ListOfMoves.add(move0 + "Lp");
+
+                j++;
+                if (Algo_moves2x2x2.Found(stateLp))
+                    break;
+            }
+
+
+            i++;
+
+
+
+            State=ListOfStates.get(i);
+
+
+        }
+
+
+        return ListOfMoves.get(j);
+    }
+
 }
+
+
+
+
 

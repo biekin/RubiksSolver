@@ -24,13 +24,13 @@ public class Algo_MainTest {
                 "1","5","2","3",
                 "1","6","4","3"));
         ArrayList<String> tryState =new ArrayList<String>(Arrays.asList(
-                "1","4","3","2",
-                "3","1","6","5",
-                "5","2","5","1",
-                "6","6","5","3",
-                "3","4","6","4",
-                "1","4","2","2"));
-        State=tryState;
+                "1","5","1","1",
+                "1","2","2","2",
+                "3","3","3","3",
+                "4","6","5","4",
+                "5","5","2","4",
+                "4","6","6","6"));
+        State=okState;
 //
 
         ArrayList<ArrayList<String>> ListOfStates = new ArrayList<>(Arrays.asList(State));
@@ -244,7 +244,7 @@ public class Algo_MainTest {
 
         }
         long stop=System.nanoTime();
-
+        System.out.println(j);
         System.out.println(ListOfMoves.get(j));
         System.out.println(ListOfStates.get(j));
         System.out.println(stop-start);
