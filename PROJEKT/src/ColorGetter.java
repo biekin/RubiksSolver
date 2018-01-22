@@ -130,7 +130,7 @@ public class ColorGetter {
         state.add(Integer.toString(GetColor(areas.get(2))));
         state.add(Integer.toString(GetColor(areas.get(3))));
 
-        if(colors.size()>20){
+        if(colors.size()!=6){
             throw new PoorPhotoException("can't read colors correctly from given photos");
         }
 
