@@ -6,11 +6,17 @@ public class ColorTest {
 
         try {
             ColorGetter cg = new ColorGetter();
-            ArrayList<String> state =cg.getState();
-            System.out.println("sukces?");
-            for (String el : state){
-                System.out.println(el);
+            try {
+                ArrayList<String> state =cg.getState();
+                System.out.println("sukces?");
+                for (String el : state){
+                    System.out.println(el);
+                }
+
+            } catch (PoorPhotoException e){
+                e.printStackTrace();
             }
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

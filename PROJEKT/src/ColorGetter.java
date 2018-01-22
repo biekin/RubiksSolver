@@ -12,10 +12,10 @@ public class ColorGetter {
 
     private int requested_height = 1280;
     private int requested_width = 720;
-    private int alpha1 = (int)((3./(8*Math.sqrt(3)))*requested_height);
-    private int alpha2 = (int)((4*Math.sqrt(3)/3)*alpha1);
+//    private int alpha1 = (int)((3./(8*Math.sqrt(3)))*requested_height);
+//    private int alpha2 = (int)((Math.sqrt(3)/12)*alpha1);
     private static ArrayList<RubiksColor> colors = new ArrayList<>();
-    private static ArrayList<Area> areas = new ArrayList<>();
+    private  ArrayList<Area> areas = new ArrayList<>();
     private static ArrayList<String> state = new ArrayList<>();
     private static ArrayList<String> tmp = new ArrayList<>();
 
@@ -55,30 +55,30 @@ public class ColorGetter {
         areas.add(new Area(438, 844, 1));//k 10
         areas.add(new Area(570,726,1)); //l  11
 
-        Image image = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/four.jpg"),
+//        Image image = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/four.jpg"),
+//                requested_width,
+//                requested_height,
+//                false,
+//                true);
+
+      //  ImageView imageView = new ImageView(image);
+
+        f1 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_front.JPG"),
                 requested_width,
                 requested_height,
                 false,
                 true);
 
-      //  ImageView imageView = new ImageView(image);
-
-        f1 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_front.JPG"));
-//                requested_width,
-//                requested_height,
-//                false,
-//                true);
-
-        f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_back.JPG"));
-//                requested_width,
-//                requested_height,
-//                false,
-//                true);
+        f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_back.JPG"),
+                requested_width,
+                requested_height,
+                false,
+                true);
 
 
 
-        PixelReader pxrd = image.getPixelReader();
-        Color clr = pxrd.getColor(719,1279);
+//        PixelReader pxrd = image.getPixelReader();
+//        Color clr = pxrd.getColor(719,1279);
 
         pixread=f1.getPixelReader();
 
@@ -91,7 +91,7 @@ public class ColorGetter {
 //        System.out.println(blue*255);
     }
 
-    public ArrayList<String> getState() {
+    public ArrayList<String> getState() throws PoorPhotoException {
 
         state.add(Integer.toString(GetColor(areas.get(4))));
         state.add(Integer.toString(GetColor(areas.get(5))));
@@ -130,7 +130,9 @@ public class ColorGetter {
         state.add(Integer.toString(GetColor(areas.get(2))));
         state.add(Integer.toString(GetColor(areas.get(3))));
 
-
+        if(colors.size()>20){
+            throw new PoorPhotoException("can't read colors correctly from given photos");
+        }
 
         return state;
     }
