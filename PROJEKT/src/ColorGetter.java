@@ -48,7 +48,7 @@ public class ColorGetter {
         areas.add(new Area(360,548,1)); //d  3
         areas.add(new Area(130,584,1)); //e  4
         areas.add(new Area(264,688,1)); //f  5
-        areas.add(new Area(444,694,1)); //g 6
+        areas.add(new Area(472,694,1)); //g 6
         areas.add(new Area(602,572,1)); //h  7
         areas.add(new Area(168,720,1)); //i 8
         areas.add(new Area(286,830,1)); //j  9
@@ -63,13 +63,13 @@ public class ColorGetter {
 
       //  ImageView imageView = new ImageView(image);
 
-        f1 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_front.JPG"),
+        f1 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/state_2_front.JPG"),
                 requested_width,
                 requested_height,
                 false,
                 false);
 
-        f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/ok_1_back.JPG"),
+        f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/state_2_back.JPG"),
                 requested_width,
                 requested_height,
                 false,
