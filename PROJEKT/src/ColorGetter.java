@@ -25,7 +25,7 @@ public class ColorGetter {
 
     private int colorIndex;
 
-    public ColorGetter() throws FileNotFoundException{
+    public ColorGetter(String file1, String file2) throws FileNotFoundException{
 
         colorIndex=1;
 //
@@ -42,46 +42,10 @@ public class ColorGetter {
 //        areas.add(new Area((int)(0.5*requested_width + 0.25*alpha1), (int)((5.0/8.0)*requested_height + alpha2), 1));//k 10
 //        areas.add(new Area((int)(0.5*requested_width + 0.75 * alpha1), (int)((5.0/8.0)*requested_height - alpha2), 1)); //l  11
 
-        areas.add(new Area(360,374, 1));  //a  0
-        areas.add(new Area(200, 444,1)); //b  1
-        areas.add(new Area(520,444,1)); //c 2
-        areas.add(new Area(360,548,1)); //d  3
-        areas.add(new Area(130,584,1)); //e  4
-        areas.add(new Area(264,688,1)); //f  5
-        areas.add(new Area(472,694,1)); //g 6
-        areas.add(new Area(602,572,1)); //h  7
-        areas.add(new Area(168,720,1)); //i 8
-        areas.add(new Area(286,830,1)); //j  9
-        areas.add(new Area(438, 844, 1));//k 10
-        areas.add(new Area(570,726,1)); //l  11
+        GenerateAreas();
 
-//        Image image = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/four.jpg"),
-//                requested_width,
-//                requested_height,
-//                false,
-//                true);
-
-      //  ImageView imageView = new ImageView(image);
-
-        f1 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/state_2_front.JPG"),
-                requested_width,
-                requested_height,
-                false,
-                false);
-
-        f2 = new Image(new FileInputStream("/home/kb/Java/JavaLabs/RubiksSolver/state_2_back.JPG"),
-                requested_width,
-                requested_height,
-                false,
-                false);
-
-
-
-//        PixelReader pxrd = image.getPixelReader();
-//        Color clr = pxrd.getColor(719,1279);
-
-        pixread=f1.getPixelReader();
-
+        FrontPhoto(file1);
+        BackPhoto(file2);
 
 //        double red = clr.getRed();
 //        double green = clr.getGreen();
@@ -92,6 +56,8 @@ public class ColorGetter {
     }
 
     public ArrayList<String> getState() throws PoorPhotoException {
+
+        pixread=f1.getPixelReader();
 
         state.add(Integer.toString(GetColor(areas.get(4))));
         state.add(Integer.toString(GetColor(areas.get(5))));
@@ -137,12 +103,22 @@ public class ColorGetter {
         return state;
     }
 
-    private void FrontPhoto(){
+    private void FrontPhoto(String path) throws FileNotFoundException {
 
+        f1 = new Image(new FileInputStream(path),
+                requested_width,
+                requested_height,
+                false,
+                false);
     }
 
-    private void BackPhoto(){
+    private void BackPhoto(String path) throws FileNotFoundException {
 
+        f2 = new Image(new FileInputStream(path),
+                requested_width,
+                requested_height,
+                false,
+                false);
     }
 
     private int GetColor(Area a){
@@ -161,5 +137,21 @@ public class ColorGetter {
         colorIndex++;
 
         return currentColorIndex;
+    }
+
+    private void GenerateAreas(){
+
+        areas.add(new Area(360,374, 1));  //a  0
+        areas.add(new Area(200, 444,1)); //b  1
+        areas.add(new Area(520,444,1)); //c 2
+        areas.add(new Area(360,548,1)); //d  3
+        areas.add(new Area(130,584,1)); //e  4
+        areas.add(new Area(264,688,1)); //f  5
+        areas.add(new Area(472,694,1)); //g 6
+        areas.add(new Area(602,572,1)); //h  7
+        areas.add(new Area(168,720,1)); //i 8
+        areas.add(new Area(286,830,1)); //j  9
+        areas.add(new Area(438, 844, 1));//k 10
+        areas.add(new Area(570,726,1)); //l  11
     }
 }
