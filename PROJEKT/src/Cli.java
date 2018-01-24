@@ -1,25 +1,29 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Cli
+public class Cli implements Runnable
 {
     public static final int PORT=6666;
+    private ArrayList<String> State;
+    private String solution;
     public static final String HOST = "127.0.0.1";
-    public static void main(String[] argv) throws Exception{
-        ArrayList<String> tryState =new ArrayList<String>(Arrays.asList(
-                "3","6","4","6",
-                "3","2","1","5",
-                "3","2","4","6",
-                "5","4","2","3",
-                "1","5","2","6",
-                "1","1","4","5"));
-        Communication(tryState);
+
+    public Cli(ArrayList<String> state){this.State=state; this.solution="";};
+
+    public String GetSolution(){
+        return this.solution;
     }
-    public static String Communication(ArrayList<String> State) throws Exception
-    {
+
+    @Override
+    public void run(){
+
+
+
+
         String pass;
         Socket sock;
         PrintWriter out;
@@ -30,29 +34,30 @@ public class Cli
 
         int dis = 0;
         String used;
+try {
+    sock = new Socket("localhost", PORT);
+    //           System.out.println("Nawiazalem polaczenie: " + sock);
 
-            sock = new Socket("localhost", PORT);
- //           System.out.println("Nawiazalem polaczenie: " + sock);
-
-            //tworzenie strumieni danych  i dostarczanych do socketu
+    //tworzenie strumieni danych  i dostarczanych do socketu
 //            out = new PrintWriter(sock.getOutputStream(), true);
-            oos = new ObjectOutputStream(sock.getOutputStream());
+    oos = new ObjectOutputStream(sock.getOutputStream());
 
-            //komunikacja - czytanie danych z klawiatury i przekazywanie ich do strumienia
- //           System.out.print("<Wysylamy:> ");
+    //komunikacja - czytanie danych z klawiatury i przekazywanie ich do strumienia
+    //           System.out.print("<Wysylamy:> ");
 //            out.println(used);
-            oos.writeObject(State);
-            in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+    oos.writeObject(State);
+    in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
-            inputLine = in.readLine();
-            System.out.print(inputLine);
+    this.solution = in.readLine();
+
+
             //zamykanie polaczenia
             oos.close();
             sock.close();
-            in.close();
-    return inputLine;
+            in.close();}
+ catch (Exception e){};
                 }
 
-    }
+}
 
 

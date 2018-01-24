@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PicToArr {
-    public static ArrayList<String> toArr(Image pic, Image pic2){
+    public static ArrayList<String> toArr(String pic, String pic2){
       ArrayList<String> out;
 
         ArrayList<String> State =new ArrayList<String>(Arrays.asList(
