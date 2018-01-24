@@ -17,24 +17,24 @@ public class Algo_MainTest {
                 "1","5","2","6",
                 "1","1","4","5"));
         ArrayList<String> okState =new ArrayList<String>(Arrays.asList(
-                "6","1","3","4",
-                "6","2","5","4",
-                "3","2","5","1",
-                "5","2","6","4",
-                "1","5","2","3",
-                "1","6","4","3"));
+                "1","2","3","4",
+                "5","6","3","1",
+                "4","6","5","5",
+                "1","5","3","3",
+                "4","2","6","6",
+                "2","4","1","2"));
         ArrayList<String> tryState =new ArrayList<String>(Arrays.asList(
-                "1","5","1","1",
-                "1","2","2","2",
-                "3","3","3","3",
-                "4","6","5","4",
-                "5","5","2","4",
-                "4","6","6","6"));
-        State=okState;
+                "5","2","1","4",
+                "5","2","2","2",
+                "3","4","3","3",
+                "1","4","6","4",
+                "5","5","1","3",
+                "1","6","6","6"));
+        State=tryState;
 //
 
         ArrayList<ArrayList<String>> ListOfStates = new ArrayList<>(Arrays.asList(State));
-        ArrayList<String> ListOfMoves = new ArrayList<String>(Arrays.asList("p0"));
+//        ArrayList<String> ListOfMoves = new ArrayList<String>(Arrays.asList("p0"));
 
         long start=System.nanoTime();
         int j=0;
@@ -69,17 +69,17 @@ public class Algo_MainTest {
             if(Algo_moves2x2x2.Found(State))
                 break;
 
-            move0=ListOfMoves.get(i);
-            lastmove=move0.charAt(move0.length()-2);
-            if (lastmove!='F') {
+//            move0=ListOfMoves.get(i);
+//            lastmove=move0.charAt(move0.length()-2);
+//            if (lastmove!='F') {
                 stateF = Algo_moves2x2x2.F(State);
                 ListOfStates.add(stateF);
-                ListOfMoves.add(move0 + "F1");
+//                ListOfMoves.add(move0 + "F1");
                 j++;
                 if (Algo_moves2x2x2.Found(stateF))
                     break;
 //                Algo_moves2x2x2.save(stateF, j, move0 + "F1");
-            }
+//            }
 //            stateB=Algo_moves2x2x2.B(State);
 //            ListOfStates.add(stateB);
 //            ListOfMoves.add(move0+"B1");
@@ -87,17 +87,17 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateB,j,move0+"B1");
 
-            if (lastmove!='D') {
+//            if (lastmove!='D') {
 
                 stateD = Algo_moves2x2x2.D(State);
                 ListOfStates.add(stateD);
-                ListOfMoves.add(move0 + "D1");
+//                ListOfMoves.add(move0 + "D1");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateD))
                     break;
 //                Algo_moves2x2x2.save(stateD, j, move0 + "D1");
-            }
+//            }
 
 //            stateU=Algo_moves2x2x2.U(State);
 //            ListOfStates.add(stateU);
@@ -106,17 +106,17 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateU,j,move0+"U1");
 
-            if (lastmove!='L') {
+//            if (lastmove!='L') {
 
                 stateL = Algo_moves2x2x2.L(State);
                 ListOfStates.add(stateL);
-                ListOfMoves.add(move0 + "L1");
+//                ListOfMoves.add(move0 + "L1");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateL))
                     break;
  //               Algo_moves2x2x2.save(stateL, j, move0 + "L1");
-            }
+//            }
 
 //            stateR=Algo_moves2x2x2.R(State);
 //            ListOfStates.add(stateR);
@@ -124,16 +124,16 @@ public class Algo_MainTest {
 //
 //            j++;
 //            Algo_moves2x2x2.save(stateR,j,move0+"R1");
-            if (lastmove!='F') {
+//            if (lastmove!='F') {
 
                 stateF2 = Algo_moves2x2x2.F2(State);
                 ListOfStates.add(stateF2);
-                ListOfMoves.add(move0 + "F2");
+//                ListOfMoves.add(move0 + "F2");
                 j++;
                 if (Algo_moves2x2x2.Found(stateF2))
                     break;
 //                Algo_moves2x2x2.save(stateF2, j, move0 + "F2");
-            }
+//            }
 //            stateB2=Algo_moves2x2x2.B2(State);
 //            ListOfStates.add(stateB2);
 //            ListOfMoves.add(move0+"B2");
@@ -141,18 +141,18 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateB2,j,move0+"B2");
 
-            if (lastmove!='D') {
+//            if (lastmove!='D') {
 
                 stateD2 = Algo_moves2x2x2.D2(State);
                 ListOfStates.add(stateD2);
-                ListOfMoves.add(move0 + "D2");
+//                ListOfMoves.add(move0 + "D2");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateD2))
                     break;
 //                Algo_moves2x2x2.save(stateD2, j, move0 + "D2");
-            }
-
+ //           }
+//
 //            stateU2=Algo_moves2x2x2.U2(State);
 //            ListOfStates.add(stateU2);
 //            ListOfMoves.add(move0+"U2");
@@ -160,17 +160,17 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateU2,j,move0+"U2");
 
-            if (lastmove!='L') {
+//            if (lastmove!='L') {
 
                 stateL2 = Algo_moves2x2x2.L2(State);
                 ListOfStates.add(stateL2);
-                ListOfMoves.add(move0 + "L2");
+//                ListOfMoves.add(move0 + "L2");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateL2))
                     break;
 //                Algo_moves2x2x2.save(stateL2, j, move0 + "L2");
-            }
+//            }
 
 //            stateR2=Algo_moves2x2x2.R2(State);
 //            ListOfStates.add(stateR2);
@@ -179,16 +179,16 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateR2,j,move0+"R2");
 
-            if (lastmove!='F') {
+//            if (lastmove!='F') {
 
                 stateFp = Algo_moves2x2x2.Fprim(State);
                 ListOfStates.add(stateFp);
-                ListOfMoves.add(move0 + "Fp");
+//                ListOfMoves.add(move0 + "Fp");
                 j++;
                 if (Algo_moves2x2x2.Found(stateFp))
                     break;
 //                Algo_moves2x2x2.save(stateFp, j, move0 + "Fp");
-            }
+//            }
 //            stateBp=Algo_moves2x2x2.Bprim(State);
 //            ListOfStates.add(stateBp);
 //            ListOfMoves.add(move0+"Bp");
@@ -196,17 +196,17 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateBp,j,move0+"Bp");
 
-            if (lastmove!='D') {
+//            if (lastmove!='D') {
 
                 stateDp = Algo_moves2x2x2.Dprim(State);
                 ListOfStates.add(stateDp);
-                ListOfMoves.add(move0 + "Dp");
+//                ListOfMoves.add(move0 + "Dp");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateDp))
                     break;
 //                Algo_moves2x2x2.save(stateDp, j, move0 + "Dp");
-            }
+//            }
 
 //            stateUp=Algo_moves2x2x2.Uprim(State);
 //            ListOfStates.add(stateUp);
@@ -215,17 +215,17 @@ public class Algo_MainTest {
 //            j++;
 //            Algo_moves2x2x2.save(stateUp,j,move0+"Up");
 
-            if (lastmove!='L') {
+//            if (lastmove!='L') {
 
                 stateLp = Algo_moves2x2x2.Lprim(State);
                 ListOfStates.add(stateLp);
-                ListOfMoves.add(move0 + "Lp");
+//                ListOfMoves.add(move0 + "Lp");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateLp))
                     break;
 //                Algo_moves2x2x2.save(stateLp, j, move0 + "Lp");
-            }
+//            }
 
 //            stateRp=Algo_moves2x2x2.Rprim(State);
 //            ListOfStates.add(stateRp);
@@ -245,7 +245,7 @@ public class Algo_MainTest {
         }
         long stop=System.nanoTime();
         System.out.println(j);
-        System.out.println(ListOfMoves.get(j));
+//        System.out.println(ListOfMoves.get(j));
         System.out.println(ListOfStates.get(j));
         System.out.println(stop-start);
 

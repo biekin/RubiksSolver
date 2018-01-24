@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.lang.Thread.sleep;
+
 public class App extends Application {
     private Desktop desktop = Desktop.getDesktop();
     public static void main(String[] args) {
@@ -108,19 +110,22 @@ public class App extends Application {
 
                 String solution="";
                 try {
+                    group.getChildren().add(selectedImageFront);
+                    selectedImageFront.setFitHeight(100);
+                    selectedImageFront.setFitWidth(100);
                     Cli cli = new Cli(PicToArr.toArr(files.get(0).toURI().toString(),files.get(1).toURI().toString()));
 
                     Thread thread = new Thread(cli);
                     thread.start();
-                    while ((solution=cli.GetSolution()).equals("")){
+                    int i=0;
+                    while (!thread.getState().toString().equals("TERMINATED")){
 
-                        Text t = new Text("dncdjcndjcn");
-                        t.setFont(Font.font("Verdana", 20));
-                        t.setFill(Color.WHITE);
-                        t.setY(300);
-                        group.getChildren().add(t);
 
+                        selectedImageFront.setVisible(false);
+                        selectedImageFront.setVisible(true);
                     }
+
+                    solution = cli.GetSolution();
                     Text t = new Text(solution);
                     t.setFont(Font.font("Verdana", 20));
                     t.setFill(Color.WHITE);

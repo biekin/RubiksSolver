@@ -653,12 +653,12 @@ public class Algo_moves2x2x2
                 "1","5","2","6",
                 "1","1","4","5"));
         ArrayList<String> okState =new ArrayList<String>(Arrays.asList(
-                "1","1","1","1",
-                "2","2","2","2",
-                "3","3","3","3",
-                "4","4","4","4",
-                "5","5","5","5",
-                "6","6","6","6"));
+               "1","1","2","3",
+                "3","3","4","5",
+                "1","2","3","5",
+                "1","4","2","6",
+                "4","2","6","6",
+                "5","4","6","5"));
         System.out.println(Algo_moves2x2x2.D(Algo_moves2x2x2.D(tryState)));
         System.out.println(Algo_moves2x2x2.D2(tryState));
         System.out.println(Algo_moves2x2x2.D(Algo_moves2x2x2.D(Algo_moves2x2x2.D(tryState))));
