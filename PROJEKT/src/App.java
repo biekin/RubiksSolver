@@ -59,6 +59,7 @@ public class App extends Application {
         btn.setLayoutY(450);
         Image image1 = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\2x2x2_RubicksCubeok.png").toURI().toURL().toExternalForm());
         final ImageView selectedImage = new ImageView();
+
         selectedImage.setImage(image1);
         Image image2 = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\2x2_nieulozona.png").toURI().toURL().toExternalForm());
         final ImageView selectedImage2 = new ImageView();
@@ -88,33 +89,50 @@ public class App extends Application {
             public void handle(ActionEvent event) {
                 Group group = new Group();
                 StackPane root = new StackPane();
-                Scene scene = new Scene(group ,400, 600);
+                Scene scene = new Scene(group ,800, 600);
                 primaryStage.setScene(scene);
                 scene.setFill(Color.rgb(0,0,68));
                 textArea.clear();
                 List<File> files = fileChooser.showOpenMultipleDialog(primaryStage);
 
+
                 Image image1 = new Image(files.get(0).toURI().toString());
                 Image image2 = new Image(files.get(1).toURI().toString());
-                System.out.println("1");
+                final ImageView selectedImageFront = new ImageView();
+                selectedImageFront.setImage(image1);
+                group.getChildren().add(selectedImageFront);
+                selectedImageFront.setVisible(false);
+                selectedImageFront.setVisible(true);
+                group.getChildren().add(selectedImageArr);
 
-                String solution;
+
+                String solution="";
                 try {
-                    System.out.println("3");
+                    Cli cli = new Cli(PicToArr.toArr(files.get(0).toURI().toString(),files.get(1).toURI().toString()));
 
-                    solution = Cli.Communication(PicToArr.toArr(image1,image2));
+                    Thread thread = new Thread(cli);
+                    thread.start();
+                    while ((solution=cli.GetSolution()).equals("")){
 
-                    System.out.println("2");
-                    System.out.println(PicToArr.toArr(image1,image2));
+                        Text t = new Text("dncdjcndjcn");
+                        t.setFont(Font.font("Verdana", 20));
+                        t.setFill(Color.WHITE);
+                        t.setY(300);
+                        group.getChildren().add(t);
+
+                    }
                     Text t = new Text(solution);
                     t.setFont(Font.font("Verdana", 20));
+                    t.setFill(Color.WHITE);
                     t.setY(300);
                     group.getChildren().add(t);
+//                    primaryStage.show();
+
                 }
                 catch (Exception e){};
 
-                primaryStage.show();            }
-        });
+  //              primaryStage.show();
+            }});
         btn2.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
