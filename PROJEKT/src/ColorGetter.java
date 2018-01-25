@@ -8,16 +8,28 @@ import java.util.ArrayList;
 
 public class ColorGetter {
 
-    // PHOTO RATIO 16:9 !!!! VERTICAL ONLY
+    /*PHOTOS MUST BE:
+
+    -of ratio 16:9
+    -vertical only
+    -not deformated (f.e. "fish eye" or sth)
+    -both taken in the same light
+    -without a shade on the cube
+
+    RECOMENED:
+    -slightly bigger contrast&saturation
+    -resolition min 720x1280
+
+
+     */
 
     private int requested_height = 1280;
     private int requested_width = 720;
-//    private int alpha1 = (int)((3./(8*Math.sqrt(3)))*requested_height);
-//    private int alpha2 = (int)((Math.sqrt(3)/12)*alpha1);
     private static ArrayList<RubiksColor> colors = new ArrayList<>();
-    private  ArrayList<Area> areas = new ArrayList<>();
+    private static ArrayList<Area> areas = new ArrayList<>();
     private static ArrayList<String> state = new ArrayList<>();
     private static ArrayList<String> tmp = new ArrayList<>();
+    private static ArrayList<Integer> counters = new ArrayList<>();
 
     private PixelReader pixread;
 
@@ -27,37 +39,20 @@ public class ColorGetter {
 
     public ColorGetter(String file1, String file2) throws FileNotFoundException{
 
+        // initializing object
+
         colorIndex=1;
-//
-//        areas.add(new Area((int)(0.5*requested_width), (int)((5./16.)*requested_height), 1));  //A  0
-//        areas.add(new Area((int)(0.5*requested_width-0.5*alpha1), (int)((3./8.)*requested_height), 1)); //b  1
-//        areas.add(new Area((int)(0.5*requested_width+0.5*alpha1),(int)((3./8.)*requested_height),1)); //c 2
-//        areas.add(new Area((int)(0.5*requested_width),(int)((7.0/16.0)*requested_height),1)); //d  3
-//        areas.add(new Area((int)(0.5*requested_width - 0.75 * alpha1), (int)(0.5*requested_height + alpha2), 1)); //e  4
-//        areas.add(new Area((int)(0.5*requested_width - 0.25 * alpha1), (int)(0.5 * requested_height - alpha2), 1)); //f  5
-//        areas.add(new Area((int)(0.5*requested_width - 0.25*alpha1), (int)(0.5*requested_height + alpha2), 1)); //g 6
-//        areas.add(new Area((int)(0.5*requested_width + 0.75*alpha1), (int)(0.5 * requested_height - alpha2), 1)); //h  7
-//        areas.add(new Area((int)(0.5*requested_width - 0.75*alpha1), (int)((5.0/8.0) * requested_height - alpha2), 1)); //i 8
-//        areas.add(new Area((int)(0.5*requested_width - 0.25*alpha1), (int)((5.0/8.0)*requested_height + alpha2), 1)); //j  9
-//        areas.add(new Area((int)(0.5*requested_width + 0.25*alpha1), (int)((5.0/8.0)*requested_height + alpha2), 1));//k 10
-//        areas.add(new Area((int)(0.5*requested_width + 0.75 * alpha1), (int)((5.0/8.0)*requested_height - alpha2), 1)); //l  11
-
         GenerateAreas();
-
         FrontPhoto(file1);
         BackPhoto(file2);
 
-//        double red = clr.getRed();
-//        double green = clr.getGreen();
-//        double blue = clr.getBlue();
-//        System.out.println(red*255);
-//        System.out.println(green*255);
-//        System.out.println(blue*255);
     }
 
     public ArrayList<String> getState() throws PoorPhotoException {
 
         pixread=f1.getPixelReader();
+
+        //Getting the colors in the RIGHT ORDER for the algorithm
 
         state.add(Integer.toString(GetColor(areas.get(4))));
         state.add(Integer.toString(GetColor(areas.get(5))));
@@ -96,14 +91,22 @@ public class ColorGetter {
         state.add(Integer.toString(GetColor(areas.get(2))));
         state.add(Integer.toString(GetColor(areas.get(3))));
 
+        // chcecking if te state was read correctly
+
+
         if(colors.size()!=6){
-            throw new PoorPhotoException("can't read colors correctly from given photos");
+            throw new PoorPhotoException("I found wrong number of colours. Gimmie better photos.");
+        }
+        for(Integer counter : counters){
+            if (!counter.equals(4)){
+                throw new PoorPhotoException("I found wrong number of squares of a color, gimmie better photos.");
+            }
         }
 
         return state;
     }
 
-    private void FrontPhoto(String path) throws FileNotFoundException {
+    private void FrontPhoto(String path) throws FileNotFoundException { //loading front photo
 
         f1 = new Image(new FileInputStream(path),
                 requested_width,
@@ -112,7 +115,7 @@ public class ColorGetter {
                 false);
     }
 
-    private void BackPhoto(String path) throws FileNotFoundException {
+    private void BackPhoto(String path) throws FileNotFoundException { //loading back photo
 
         f2 = new Image(new FileInputStream(path),
                 requested_width,
@@ -126,32 +129,37 @@ public class ColorGetter {
         Color currentColor = a.readColor(pixread, colorIndex);
         int currentColorIndex = 0;
 
+        int i=0;
         for(RubiksColor rcolor : colors){
             if(rcolor.belongs(currentColor)){
                 currentColorIndex=rcolor.getIndex();
+                counters.set(i, counters.get(i)+1);
                 return currentColorIndex;
             }
+            i++;
         }
         colors.add(new RubiksColor(currentColor,colorIndex));
         currentColorIndex=colorIndex;
+        counters.add(0);
         colorIndex++;
+
 
         return currentColorIndex;
     }
 
     private void GenerateAreas(){
 
-        areas.add(new Area(360,374, 1));  //a  0
-        areas.add(new Area(200, 444,1)); //b  1
-        areas.add(new Area(520,444,1)); //c 2
-        areas.add(new Area(360,548,1)); //d  3
-        areas.add(new Area(130,584,1)); //e  4
-        areas.add(new Area(264,688,1)); //f  5
-        areas.add(new Area(472,694,1)); //g 6
-        areas.add(new Area(602,572,1)); //h  7
-        areas.add(new Area(168,720,1)); //i 8
-        areas.add(new Area(286,830,1)); //j  9
-        areas.add(new Area(438, 844, 1));//k 10
-        areas.add(new Area(570,726,1)); //l  11
+        areas.add(new Area(360,374));  //a  0
+        areas.add(new Area(200, 444)); //b  1
+        areas.add(new Area(520,444)); //c 2
+        areas.add(new Area(360,548)); //d  3
+        areas.add(new Area(130,584)); //e  4
+        areas.add(new Area(264,688)); //f  5
+        areas.add(new Area(472,694)); //g 6
+        areas.add(new Area(602,572)); //h  7
+        areas.add(new Area(168,720)); //i 8
+        areas.add(new Area(286,830)); //j  9
+        areas.add(new Area(438, 844));//k 10
+        areas.add(new Area(570,726)); //l  11
     }
 }
