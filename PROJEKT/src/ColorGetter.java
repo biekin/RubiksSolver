@@ -140,7 +140,7 @@ public class ColorGetter {
         }
         colors.add(new RubiksColor(currentColor,colorIndex));
         currentColorIndex=colorIndex;
-        counters.add(0);
+        counters.add(1);
         colorIndex++;
 
 
