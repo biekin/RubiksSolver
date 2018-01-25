@@ -3,6 +3,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -10,8 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.*;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -38,18 +39,15 @@ import java.util.Arrays;
 import static java.lang.Thread.sleep;
 
 public class App extends Application {
+    boolean  startapp = false;
     private Desktop desktop = Desktop.getDesktop();
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void showSolve(Stage primaryStage){
-
-    }
     @Override
     public void start(Stage primaryStage) throws Exception{
         final FileChooser fileChooser = new FileChooser();
-        TextArea textArea = new TextArea();
         Button btn = new Button();
         Button btn2 = new Button();
         btn2.setLayoutX(80);
@@ -57,7 +55,7 @@ public class App extends Application {
 
         btn.setText("Add photos");
         btn2.setText("How to use");
-        btn.setLayoutX(700);
+        btn.setLayoutX(750);
         btn.setLayoutY(450);
         Image image1 = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\2x2x2_RubicksCubeok.png").toURI().toURL().toExternalForm());
         final ImageView selectedImage = new ImageView();
@@ -66,77 +64,33 @@ public class App extends Application {
         Image image2 = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\2x2_nieulozona.png").toURI().toURL().toExternalForm());
         final ImageView selectedImage2 = new ImageView();
         selectedImage2.setImage(image2);
-        selectedImage.setX(500);
+        selectedImage.setX(550);
         selectedImage.setY(200);
         selectedImage2.setX(80);
         selectedImage2.setY(200);
         Image arr = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\arrow.png").toURI().toURL().toExternalForm());
         final ImageView selectedImageArr = new ImageView();
         selectedImageArr.setImage(arr);
-        selectedImageArr.setX(350);
+        selectedImageArr.setX(375);
         selectedImageArr.setY(300);
         selectedImageArr.setFitWidth(150);
         selectedImageArr.setFitHeight(60);
         selectedImageArr.scaleXProperty();
+
         Text t = new Text("Rubik's Cube \n     Solver");
         t.setFill(Color.WHITE);
 
 
         t.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
         t.setY(100);
-        t.setX(220);
+        t.setX(270);
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                Group group = new Group();
-                StackPane root = new StackPane();
-                Scene scene = new Scene(group ,800, 600);
-                primaryStage.setScene(scene);
-                scene.setFill(Color.rgb(0,0,68));
-                textArea.clear();
-                List<File> files = fileChooser.showOpenMultipleDialog(primaryStage);
-
-
-                Image image1 = new Image(files.get(0).toURI().toString());
-                Image image2 = new Image(files.get(1).toURI().toString());
-                final ImageView selectedImageFront = new ImageView();
-                selectedImageFront.setImage(image1);
-                group.getChildren().add(selectedImageFront);
-                selectedImageFront.setVisible(false);
-                selectedImageFront.setVisible(true);
-                group.getChildren().add(selectedImageArr);
-
-
-                String solution="";
-                try {
-                    group.getChildren().add(selectedImageFront);
-                    selectedImageFront.setFitHeight(100);
-                    selectedImageFront.setFitWidth(100);
-                    Cli cli = new Cli(PicToArr.toArr(files.get(0).toURI().toString(),files.get(1).toURI().toString()));
-
-                    Thread thread = new Thread(cli);
-                    thread.start();
-                    int i=0;
-                    while (!thread.getState().toString().equals("TERMINATED")){
-
-
-                        selectedImageFront.setVisible(false);
-                        selectedImageFront.setVisible(true);
-                    }
-
-                    solution = cli.GetSolution();
-                    Text t = new Text(solution);
-                    t.setFont(Font.font("Verdana", 20));
-                    t.setFill(Color.WHITE);
-                    t.setY(300);
-                    group.getChildren().add(t);
-//                    primaryStage.show();
-
-                }
-                catch (Exception e){};
-
-  //              primaryStage.show();
+                try{
+               startTheGame(primaryStage,fileChooser);}
+               catch(Exception e){}
             }});
         btn2.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -145,9 +99,13 @@ public class App extends Application {
                 System.out.println("...");
             }
         });
+
+
+
+
         Group group = new Group();
         StackPane root = new StackPane();
-        Scene scene = new Scene(group ,800, 600);
+        Scene scene = new Scene(group ,900, 600);
         group.getChildren().add(btn);
         group.getChildren().add(btn2);
         group.getChildren().add(selectedImage);
@@ -162,20 +120,212 @@ public class App extends Application {
 
         primaryStage.show();
     }
-    private void printLog(TextArea textArea, List<File> files) {
-        if (files == null || files.isEmpty()) {
-            return;
+
+    public void startTheGame(Stage primaryStage,FileChooser fileChooser )throws Exception{
+
+
+        ArrayList<File> files = new ArrayList<>();
+        System.out.println(files.size());
+        files.add(fileChooser.showOpenDialog(primaryStage));
+
+        while (files.size()!=2){
+            if (files.size()>2 || files.size()==0){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Proszę wybrać dokładnie dwa pliki!");
+                alert.showAndWait();
+                files.removeAll(files);
+                files.add(fileChooser.showOpenDialog(primaryStage));
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Proszę wybrać drugi plik");
+                alert.showAndWait();
+                files.add(fileChooser.showOpenDialog(primaryStage));
+            }
         }
-        for (File file : files) {
-            textArea.appendText(file.getAbsolutePath() + "\n");
+        ColorGetter rubikscube = new ColorGetter(files.get(0).getAbsolutePath(),files.get(1).getAbsolutePath());
+  //      System.out.println("1");
+   //     System.out.println();
+        ArrayList<String> State = rubikscube.getState();
+  //      System.out.println(State);
+        Cli cli = new Cli(State);
+        Thread thread = new Thread(cli);
+        thread.start();
+        int j=0;
+        while (!thread.getState().toString().equals("TERMINATED")) {
+            try{
+                sleep(100);}
+            catch (Exception e){}
         }
+        Group group = new Group();
+        StackPane root = new StackPane();
+        Scene scene = new Scene(group ,900, 600);
+        primaryStage.setScene(scene);
+        scene.setFill(Color.rgb(0,0,68));
+
+        Button btn3 = new Button();
+
+
+        btn3.setText("Undo");
+        btn3.setLayoutX(30);
+        btn3.setLayoutY(20);
+        group.getChildren().add(btn3);
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try{
+            start(primaryStage);}
+            catch (Exception e){}
+            }});
+        Image image1 = new Image(files.get(0).toURI().toString());
+
+        final ImageView selectedImageFront = new ImageView();
+        selectedImageFront.setImage(image1);
+
+
+
+        String solution="";
+        try {
+            Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\1pxreset.png").toURI().toURL().toExternalForm());
+            final ImageView selectedImageReset = new ImageView();
+            selectedImageReset.setImage(reset);
+            selectedImageFront.setFitHeight(240);
+            selectedImageFront.setFitWidth(135);
+            selectedImageFront.setX(570);
+            selectedImageFront.setY(128);
+
+            group.getChildren().add(selectedImageReset);
+            group.getChildren().add(selectedImageFront);
+
+            Image arr = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\arrow.png").toURI().toURL().toExternalForm());
+            final ImageView selectedImageArr = new ImageView();
+            selectedImageArr.setImage(arr);
+            selectedImageArr.setX(442);
+            selectedImageArr.setY(235);
+            selectedImageArr.setFitWidth(150);
+            selectedImageArr.setFitHeight(50);
+            selectedImageArr.scaleXProperty();
+            group.getChildren().add(selectedImageArr);
+
+            Text man = new Text ("Ustaw kostkę w pozycji ze zdjęcia,\nWskazaną ścianą do przodu");
+            man.setX(50);
+            man.setY(100);
+            man.setFill(Color.WHITE);
+            man.setFont(Font.font("Verdana",30));
+            group.getChildren().add(man);
+
+
+
+
+
+
+            ArrayList<String> ListOfMoves= new ArrayList<>();
+            solution = cli.GetSolution();
+            int i=0;
+            for (i=1;i<solution.length()/2;i++){
+                ListOfMoves.add(solution.substring(i*2,i*2+2));
+            }
+            for(i=0;i<ListOfMoves.size();i++){
+                Text t = new Text(ListOfMoves.get(i));
+                t.setFont(Font.font("Verdana", 30));
+                t.setFill(Color.WHITE);
+                t.setY(550);
+                t.setX(40+90*i);
+                ImageView image = giveMeArrow(ListOfMoves.get(i));
+                image.setY(450);
+                image.setX(30+90*i);
+                group.getChildren().add(t);
+                group.getChildren().add(image);}
+            primaryStage.show();
+
+
+
+        }
+        catch (Exception e){};
+
+        //              primaryStage.show();
     }
 
-    private void openFile(File file) {
+    private ImageView giveMeArrow(String move){
+        final ImageView selectedImageReset = new ImageView();
         try {
-            this.desktop.open(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (move.equals("L ")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrL.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+
+
+            }
+            else if (move.equals("F ")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrF.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+
+
+            }
+            else if (move.equals("D ")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrD.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+            else if (move.equals("F2")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrF2.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+            else if (move.equals("L2")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrL2.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+
+            else if (move.equals("D2")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrD2.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+            else if (move.equals("F\'")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrFprim.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+
+            else if (move.equals("L\'")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrLprim.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+            }
+
+            else if (move.equals("D\'")) {
+                Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\ArrDprim.png").toURI().toURL().toExternalForm());
+                selectedImageReset.setImage(reset);
+
+            }
+
         }
+        catch(Exception e){};
+
+        return selectedImageReset;
+
+        }
+
+    private void canYouDisplaySth(Stage primaryStage){
+
+        Group group = new Group();
+        StackPane root = new StackPane();
+        Scene scene = new Scene(group ,900, 600);
+        primaryStage.setScene(scene);
+        scene.setFill(Color.rgb(0,0,68));
+        Text t = new Text("Please wait");
+        t.setFont(Font.font("Verdana", 30));
+        t.setFill(Color.WHITE);
+        t.setY(550);
+        t.setX(40);
+        group.getChildren().add(t);
+        primaryStage.show();
+        try{
+        sleep(100);}
+        catch (Exception e){}
+
     }
-}
+    }
+
+

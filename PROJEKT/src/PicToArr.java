@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PicToArr {
-    public static ArrayList<String> toArr(String pic, String pic2){
+    public static ArrayList<String> toArr(String pic, String pic2) throws Exception{
       ArrayList<String> out;
 
         ArrayList<String> State =new ArrayList<String>(Arrays.asList(
@@ -23,15 +23,19 @@ public class PicToArr {
                 "1","5","2","3",
                 "1","6","4","3"));
         ArrayList<String> tryState =new ArrayList<String>(Arrays.asList(
-                "5","2","1","4",
-                "5","2","2","2",
-                "3","4","3","3",
-                "1","4","6","4",
-                "5","5","1","3",
-                "1","6","6","6"));
+                "1", "2", "1", "2",
+                "3", "4", "3", "4",
+                "2", "1", "2", "1",
+                "4", "3", "4", "3",
+                "5", "5", "5", "5",
+                "6", "6", "6", "6"));
 
-      out = tryState;
-      return out;
+        ColorGetter rubikscube = new ColorGetter(pic,pic2);
+        System.out.println("1");
+        System.out.println();
+        out = rubikscube.getState();
+              out = tryState;
+        return out;
     }
 
 }

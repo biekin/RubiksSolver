@@ -12,7 +12,7 @@ public class Cli implements Runnable
     private String solution;
     public static final String HOST = "127.0.0.1";
 
-    public Cli(ArrayList<String> state){this.State=state; this.solution="abc";};
+    public Cli(ArrayList<String> state){this.State=state; this.solution="abc"; System.out.print("zrobiłem się");};
 
     public String GetSolution(){
         System.out.print(this.solution);

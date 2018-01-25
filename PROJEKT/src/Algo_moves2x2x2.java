@@ -614,32 +614,32 @@ public class Algo_moves2x2x2
 //                "1","1","1","1"
 //                ));
             if (!(
-                    state.get(0)==state.get(1) &&
-                            state.get(2)==state.get(3) &&
-                            state.get(2)==state.get(1)&&
+                    state.get(0).equals(state.get(1)) &&
+                            state.get(2).equals(state.get(3)) &&
+                            state.get(2).equals(state.get(1))&&
 
-                            state.get(4)==state.get(5) &&
-                            state.get(5)==state.get(6) &&
-                            state.get(6)==state.get(7)&&
+                            state.get(4).equals(state.get(5)) &&
+                            state.get(5).equals(state.get(6)) &&
+                            state.get(6).equals(state.get(7))&&
 
-                            state.get(8)==state.get(9) &&
-                            state.get(9)==state.get(10) &&
-                            state.get(11)==state.get(10)&&
+                            state.get(8).equals(state.get(9)) &&
+                            state.get(9).equals(state.get(10)) &&
+                            state.get(11).equals(state.get(10))&&
 
-                            state.get(12)==state.get(13) &&
-                            state.get(13)==state.get(14) &&
-                            state.get(15)==state.get(14)&&
+                            state.get(12).equals(state.get(13)) &&
+                            state.get(13).equals(state.get(14)) &&
+                            state.get(15).equals(state.get(14))&&
 
-                            state.get(16)==state.get(17) &&
-                            state.get(19)==state.get(18) &&
-                            state.get(17)==state.get(18)&&
+                            state.get(16).equals(state.get(17)) &&
+                            state.get(19).equals(state.get(18)) &&
+                            state.get(17).equals(state.get(18))&&
 
-                            state.get(20)==state.get(21) &&
-                            state.get(23)==state.get(22) &&
-                            state.get(21)==state.get(22)
+                            state.get(20).equals(state.get(21)) &&
+                            state.get(23).equals(state.get(22)) &&
+                            state.get(21).equals(state.get(22)))
 
 
-            ))
+            )
                     return false;
 
         return true;
@@ -720,7 +720,7 @@ public class Algo_moves2x2x2
             if (lastmove!='F') {
                 stateF = Algo_moves2x2x2.F(State);
                 ListOfStates.add(stateF);
-                ListOfMoves.add(move0 + "F1");
+                ListOfMoves.add(move0 + "F ");
                 j++;
                 if (Algo_moves2x2x2.Found(stateF))
                     break;
@@ -731,7 +731,7 @@ public class Algo_moves2x2x2
 
                 stateD = Algo_moves2x2x2.D(State);
                 ListOfStates.add(stateD);
-                ListOfMoves.add(move0 + "D1");
+                ListOfMoves.add(move0 + "D ");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateD))
@@ -742,7 +742,7 @@ public class Algo_moves2x2x2
 
                 stateL = Algo_moves2x2x2.L(State);
                 ListOfStates.add(stateL);
-                ListOfMoves.add(move0 + "L1");
+                ListOfMoves.add(move0 + "L ");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateL))
@@ -785,7 +785,7 @@ public class Algo_moves2x2x2
 
                 stateFp = Algo_moves2x2x2.Fprim(State);
                 ListOfStates.add(stateFp);
-                ListOfMoves.add(move0 + "Fp");
+                ListOfMoves.add(move0 + "F\'");
                 j++;
                 if (Algo_moves2x2x2.Found(stateFp))
                     break;
@@ -795,7 +795,7 @@ public class Algo_moves2x2x2
 
                 stateDp = Algo_moves2x2x2.Dprim(State);
                 ListOfStates.add(stateDp);
-                ListOfMoves.add(move0 + "Dp");
+                ListOfMoves.add(move0 + "D\'");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateDp))
@@ -806,7 +806,7 @@ public class Algo_moves2x2x2
 
                 stateLp = Algo_moves2x2x2.Lprim(State);
                 ListOfStates.add(stateLp);
-                ListOfMoves.add(move0 + "Lp");
+                ListOfMoves.add(move0 + "L\'");
 
                 j++;
                 if (Algo_moves2x2x2.Found(stateLp))
