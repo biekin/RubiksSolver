@@ -38,4 +38,5 @@ public class RubiksColor {
     public int getIndex() {
         return index;
     }
+
 }
