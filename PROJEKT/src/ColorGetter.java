@@ -5,6 +5,10 @@ import javafx.scene.paint.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+/** Klasa ColorGetter służy do analizowania zdjęć. Tworzy na nich obszary
+ * z których rozpoznaje kolory i z tych danych tworzy listę typu
+ * ArrayList<String>, która jest aktualnym stanem kostki
+ */
 
 public class ColorGetter {
 
@@ -41,10 +45,26 @@ public class ColorGetter {
         FrontPhoto(file1);
         BackPhoto(file2);
         GenerateAreas();
+        createState();
+        int j=0;
+        while (!check() && j<10){
+            j++;
+            for(int i = 0; i < state.size();i++){
+                state.remove(i--);
+            }
+            for(int i = 0; i < colors.size();i++){
+                colors.remove(i--);
+            }
+            for(int i = 0; i < counters.size();i++){
+                counters.remove(i--);
+            }
+            colorIndex=1;
+            createState();
+            }
+        }
 
-    }
 
-    public ArrayList<String> getState() throws PoorPhotoException {
+    private void createState(){
         System.out.println("siedzę w generatorze state");
         pixread=f1.getPixelReader();
 
@@ -81,12 +101,57 @@ public class ColorGetter {
         state.add(tmp.get(3));
 
         tmp.clear();
-        System.out.println("siedzę w generatorze state");
 
         state.add(Integer.toString(GetColor(areas.get(1))));
         state.add(Integer.toString(GetColor(areas.get(0))));
         state.add(Integer.toString(GetColor(areas.get(2))));
         state.add(Integer.toString(GetColor(areas.get(3))));
+
+    }
+
+    public ArrayList<String> getState() throws PoorPhotoException {
+//        System.out.println("siedzę w generatorze state");
+//        pixread=f1.getPixelReader();
+//
+//        //Getting the colors in the RIGHT ORDER for the algorithm
+//
+//        state.add(Integer.toString(GetColor(areas.get(4))));
+//        state.add(Integer.toString(GetColor(areas.get(5))));
+//        state.add(Integer.toString(GetColor(areas.get(9))));
+//        state.add(Integer.toString(GetColor(areas.get(8))));
+//        state.add(Integer.toString(GetColor(areas.get(6))));
+//        state.add(Integer.toString(GetColor(areas.get(7))));
+//        state.add(Integer.toString(GetColor(areas.get(11))));
+//        state.add(Integer.toString(GetColor(areas.get(10))));
+//
+//        tmp.add(Integer.toString(GetColor(areas.get(0))));
+//        tmp.add(Integer.toString(GetColor(areas.get(2))));
+//        tmp.add(Integer.toString(GetColor(areas.get(3))));
+//        tmp.add(Integer.toString(GetColor(areas.get(1))));
+//
+//        pixread=f2.getPixelReader();
+//
+//        state.add(Integer.toString(GetColor(areas.get(11))));
+//        state.add(Integer.toString(GetColor(areas.get(10))));
+//        state.add(Integer.toString(GetColor(areas.get(6))));
+//        state.add(Integer.toString(GetColor(areas.get(7))));
+//        state.add(Integer.toString(GetColor(areas.get(9))));
+//        state.add(Integer.toString(GetColor(areas.get(8))));
+//        state.add(Integer.toString(GetColor(areas.get(4))));
+//        state.add(Integer.toString(GetColor(areas.get(5))));
+//
+//        state.add(tmp.get(0));
+//        state.add(tmp.get(1));
+//        state.add(tmp.get(2));
+//        state.add(tmp.get(3));
+//
+//        tmp.clear();
+//        System.out.println("siedzę w generatorze state");
+//
+//        state.add(Integer.toString(GetColor(areas.get(1))));
+//        state.add(Integer.toString(GetColor(areas.get(0))));
+//        state.add(Integer.toString(GetColor(areas.get(2))));
+//        state.add(Integer.toString(GetColor(areas.get(3))));
 
         // chcecking if te state was read correctly
 
@@ -95,16 +160,26 @@ public class ColorGetter {
         if(colors.size()!=6){
             throw new PoorPhotoException("I found wrong number of colours. Gimmie better photos.");
         }
-//       for(Integer counter : counters){
-  //          if (!counter.equals(4)){
- //               throw new PoorPhotoException("I found wrong number of squares of a color, gimmie better photos.");
- //           }
- //       }
+       for(Integer counter : counters){
+            if (!counter.equals(4)){
+                throw new PoorPhotoException("I found wrong number of squares of a color, gimmie better photos.");
+            }
+        }
         System.out.println("siedzę w generatorze state");
 
         return state;
     }
+    private boolean check(){
+        if(colors.size()!=6){
+            return false;        }
+        for(Integer counter : counters){
+            if (!counter.equals(4)){
+            return false;
+            }
+        }
+        return true;
 
+    }
     private void FrontPhoto(String path) throws FileNotFoundException { //loading front photo
         System.out.println("siedzę w frontphoto");
 

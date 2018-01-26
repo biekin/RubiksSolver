@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/** Klasa Cli łączy się z serwerem przekazująć obiekt typu ArrayList<String>,
+ * który jest aktualnym stanem kostki.
+ * Od serwera otrzymuje rozwiązanie tego układu typu String.
+ */
 public class Cli implements Runnable
 {
     public static final int PORT=6666;
@@ -36,7 +40,7 @@ public class Cli implements Runnable
         int dis = 0;
         String used;
 try {
-    System.out.print("msdkskd");
+    System.out.print("cli");
     sock = new Socket("localhost", PORT);
     //           System.out.println("Nawiazalem polaczenie: " + sock);
 
@@ -51,12 +55,11 @@ try {
 
     this.solution = in.readLine();
 
-System.out.println("abcd");
             //zamykanie polaczenia
             oos.close();
             sock.close();
             in.close();}
- catch (Exception e){};
+ catch (Exception e){e.getMessage();};
                 }
 
 }

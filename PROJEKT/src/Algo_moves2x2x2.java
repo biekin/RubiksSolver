@@ -2,6 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/** Klasa Algo_moves2x2x2 ma za zadanie rozwiązać przekazany za pośrednictwem serwera
+ * układ kostki. Posiada funkcje definiujące zmiany po odpowiednich ruchach
+ * oraz Algorithm, który jako argument przyjmuje aktualny stan kostki
+ * i zwraca jej rozwiązanie w postaci Stringa
+ */
 public class Algo_moves2x2x2
 {
     public static ArrayList<String> L (ArrayList<String> state){
@@ -598,21 +603,6 @@ public class Algo_moves2x2x2
     }
 
     public static boolean Found(ArrayList<String> state){
-//        ArrayList<String> okState1 =new ArrayList<String>(Arrays.asList(
-//                "1","1","1","1",
-//                "2","2","2","2",
-//                "3","3","3","3",
-//                "4","4","4","4",
-//                "5","5","5","5",
-//                "6","6","6","6"));
-//        ArrayList<String> okState2 =new ArrayList<String>(Arrays.asList(
-//                "6","6","6","6",
-//                "4","4","4","4",
-//                "5","5","5","5",
-//                "2","2","2","2",
-//                "3","3","3","3",
-//                "1","1","1","1"
-//                ));
             if (!(
                     state.get(0).equals(state.get(1)) &&
                             state.get(2).equals(state.get(3)) &&
@@ -644,33 +634,7 @@ public class Algo_moves2x2x2
 
         return true;
     }
-    public static void main(String [] args) throws Exception {
-        ArrayList<String> tryState =new ArrayList<String>(Arrays.asList(
-                "3","6","4","6",
-                "3","2","1","5",
-                "3","2","4","6",
-                "5","4","2","3",
-                "1","5","2","6",
-                "1","1","4","5"));
-        ArrayList<String> okState =new ArrayList<String>(Arrays.asList(
-               "1","1","2","3",
-                "3","3","4","5",
-                "1","2","3","5",
-                "1","4","2","6",
-                "4","2","6","6",
-                "5","4","6","5"));
-        System.out.println(Algo_moves2x2x2.D(Algo_moves2x2x2.D(tryState)));
-        System.out.println(Algo_moves2x2x2.D2(tryState));
-        System.out.println(Algo_moves2x2x2.D(Algo_moves2x2x2.D(Algo_moves2x2x2.D(tryState))));
-        System.out.println(Algo_moves2x2x2.Dprim(tryState));
 
-
-
-
-
-
-
-    }
     public static void save(ArrayList<String> state,int i,String moves) throws Exception{
     String filePath = "D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\kostka_plik.txt";
 
@@ -695,7 +659,7 @@ public class Algo_moves2x2x2
         ArrayList<String> ListOfMoves = new ArrayList<String>(Arrays.asList("p0"));
         int j=0;
 
-
+System.out.println("Siedzę w algo");
 
         ArrayList<String> stateD= new ArrayList<>();
         ArrayList<String> stateL= new ArrayList<>();
@@ -722,6 +686,7 @@ public class Algo_moves2x2x2
                 ListOfStates.add(stateF);
                 ListOfMoves.add(move0 + "F ");
                 j++;
+
                 if (Algo_moves2x2x2.Found(stateF))
                     break;
 

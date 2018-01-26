@@ -4,6 +4,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Serwer ma za zadanie przyjąć stan kostki i wygerenować dla niego
+ * rozwiązanie za pomocą klasy Algo_moves2x2x2 i funkcji
+ * Algorithm oraz je przesłać do klienta
+ */
 class Server implements Runnable {
     private Scanner in;
     private PrintStream out;
@@ -19,28 +24,24 @@ class Server implements Runnable {
         out = new PrintStream(output);
     }
 
-    private void msg(String msg) {
-        System.out.print("SRV: ");
-        System.out.println(msg);
-    }
+
     public void run(){
-//        msg("serving new connection");
         ObjectInputStream ois=null;
         try{ois = new ObjectInputStream(s.getInputStream());
             ArrayList<String> b;
             b = (ArrayList<String>)ois.readObject();
             System.out.println(b);
             String line;
+            System.out.println("Zaraz zacznę algorytm");
             line =Algo_moves2x2x2.Algorithm(b);
+            System.out.println("Skończyłem");
             System.out.println(line);
             out.println(line);
         }
-        catch (Exception e){};
+        catch (Exception e){e.getMessage();};
         while( (!Thread.currentThread().isInterrupted()) && in.hasNextLine() ) {
             String line = in.nextLine();
-//            msg(line);
-//            line =Algo_moves2x2x2.Algorithm();
-//            out.println(line);
+
         }
         try {
             out.close();
@@ -48,7 +49,6 @@ class Server implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        msg("connection closed");
     }
     public static void main(String[] args) throws IOException {
         short port = 6666;
@@ -56,8 +56,7 @@ class Server implements Runnable {
         try(ServerSocket srv = new ServerSocket(port)){
             while(true) {
                 Socket s = srv.accept();
-//                System.out.print("new connection accepted: ");
-//                System.out.println(s.getInetAddress());
+
                 new Thread(new Server(s)).start();
             }
         }

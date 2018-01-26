@@ -38,6 +38,8 @@ import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
 
+
+
 public class App extends Application {
     boolean  startapp = false;
     private Desktop desktop = Desktop.getDesktop();
@@ -49,12 +51,9 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception{
         final FileChooser fileChooser = new FileChooser();
         Button btn = new Button();
-        Button btn2 = new Button();
-        btn2.setLayoutX(80);
-        btn2.setLayoutY(450);
 
-        btn.setText("Add photos");
-        btn2.setText("How to use");
+
+        btn.setText("Rozpocznij");
         btn.setLayoutX(750);
         btn.setLayoutY(450);
         Image image1 = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\2x2x2_RubicksCubeok.png").toURI().toURL().toExternalForm());
@@ -92,14 +91,6 @@ public class App extends Application {
                startTheGame(primaryStage,fileChooser);}
                catch(Exception e){}
             }});
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("...");
-            }
-        });
-
 
 
 
@@ -107,7 +98,6 @@ public class App extends Application {
         StackPane root = new StackPane();
         Scene scene = new Scene(group ,900, 600);
         group.getChildren().add(btn);
-        group.getChildren().add(btn2);
         group.getChildren().add(selectedImage);
         group.getChildren().add(selectedImage2);
         group.getChildren().add(selectedImageArr);
@@ -125,7 +115,11 @@ public class App extends Application {
 
 
         ArrayList<File> files = new ArrayList<>();
-        System.out.println(files.size());
+        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+        alert1.setTitle("Information Dialog");
+        alert1.setHeaderText(null);
+        alert1.setContentText("Proszę wybrać pierwsze zdjęcie");
+        alert1.showAndWait();
         files.add(fileChooser.showOpenDialog(primaryStage));
 
         while (files.size()!=2){
@@ -149,10 +143,8 @@ public class App extends Application {
             }
         }
         ColorGetter rubikscube = new ColorGetter(files.get(0).getAbsolutePath(),files.get(1).getAbsolutePath());
-  //      System.out.println("1");
-   //     System.out.println();
+        try {
         ArrayList<String> State = rubikscube.getState();
-  //      System.out.println(State);
         Cli cli = new Cli(State);
         Thread thread = new Thread(cli);
         thread.start();
@@ -162,6 +154,7 @@ public class App extends Application {
                 sleep(100);}
             catch (Exception e){}
         }
+
         Group group = new Group();
         StackPane root = new StackPane();
         Scene scene = new Scene(group ,900, 600);
@@ -171,7 +164,7 @@ public class App extends Application {
         Button btn3 = new Button();
 
 
-        btn3.setText("Undo");
+        btn3.setText("Cofnij");
         btn3.setLayoutX(30);
         btn3.setLayoutY(20);
         group.getChildren().add(btn3);
@@ -191,7 +184,7 @@ public class App extends Application {
 
 
         String solution="";
-        try {
+
             Image reset = new Image(new File("D:\\MOJEPRYWATNE\\0nauka\\Informatyka\\Java_All\\PROJEKT\\src\\oth_files\\1pxreset.png").toURI().toURL().toExternalForm());
             final ImageView selectedImageReset = new ImageView();
             selectedImageReset.setImage(reset);
@@ -241,14 +234,21 @@ public class App extends Application {
                 image.setY(450);
                 image.setX(30+90*i);
                 group.getChildren().add(t);
+                image.setFitWidth(50);
+                image.setFitHeight(50);
                 group.getChildren().add(image);}
             primaryStage.show();
 
 
 
         }
-        catch (Exception e){};
-
+        catch(PoorPhotoException photo){
+            Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+            alert3.setTitle("Information Dialog");
+            alert3.setHeaderText(null);
+            alert3.setContentText("Rozpoznawanie kolorów nie powiodło się\nProszę dodać zdjęcia jeszcze raz");
+            alert3.showAndWait();
+        }
         //              primaryStage.show();
     }
 
