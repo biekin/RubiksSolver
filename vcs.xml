@@ -6,8 +6,12 @@
           <option name="url" value="https://github.com/hkolanska/IO.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/hkolanska/SOA" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="D:\MOJEPRYWATNE\0nauka\semestr5\IOProjekt" />
+    <option name="cloneParentDir" value="D:\MOJEPRYWATNE\0nauka\semestr6\SOA\LEL" />
   </component>
 </application>
