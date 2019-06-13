@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping pattern="HelloWorld" type="CLASS" />
       <mapping pattern="HelloWorld.java" type="PLAIN_TEXT" />
+      <mapping ext="m" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
